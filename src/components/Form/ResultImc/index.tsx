@@ -4,11 +4,13 @@ import styles from "./style"
 
 export default function ResultImc(props: { resultado: string; mensagemResultImc: string }) {
 	return (
-		<View>
-			<Text>{props.resultado}</Text>
+		<View style={styles.adviceBox}>
 			<Text
 			style={styles.adviceText}
 			>{props.mensagemResultImc}</Text>
+			<Text
+			style={styles.infoText}
+			>{props.resultado}</Text>
 		</View>
 	);
 }

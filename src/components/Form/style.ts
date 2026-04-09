@@ -39,6 +39,12 @@ const styles = StyleSheet.create({
 		borderRadius:40,
 		alignItems:'center',
 		padding:12,
+	},
+	errorMensage:{
+		fontSize:12,
+		color:'red',
+		fontWeight:'bold',
+		paddingLeft:20,
 	}
 })
 
