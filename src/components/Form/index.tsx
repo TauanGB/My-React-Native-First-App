@@ -17,22 +17,28 @@ export default function Form() {
 	}
 
 	function validateInput() {
-		if (height === "" || weight === ""){
+		if (height === "" || weight === "") {
+			setImc("");
 			setErrorMessage("Este Campo e Obrigatorio*");
 			Vibration.vibrate();
+		}
+		else if(imc !== ''){ 
+			setImc("");
+			setHeigth('')
+			setWeigth('')
+		}
+		else {
+			validationImc()
 		}
 	}
 
 	function validationImc() {
 		const heightNumber = parseFloat(height.replace(',', '.'));
 		const weightNumber = parseFloat(weight.replace(',', '.'));
-		validateInput()
 		
 		if (!isNaN(heightNumber) && !isNaN(weightNumber) && heightNumber > 0) {
 			const result = calcularPeso(weightNumber, heightNumber);
 			setImc(result);
-			setHeigth('')
-			setWeigth('')
 			setMessageImc("Seu imc e igual:");
 			setTextButton("Calcular Novamente");
 			setErrorMessage('')
@@ -44,48 +50,56 @@ export default function Form() {
 	}
 
 	return (
-		<Pressable onPress={Keyboard.dismiss} style={styles.formContext}>
-			<View style={styles.form}>
+		<View style={styles.Container}>
+			{imc === '' ?
+				<Pressable onPress={Keyboard.dismiss} style={styles.form} >
+					<View>
+						<Text
+							style={styles.formLabel}
+						>Altura</Text>
+						<Text
+							style={styles.errorMensage}
+						>
+							{errorMessage}
+						</Text>
+						<TextInput
+							onChangeText={setHeigth}
+							placeholder="Digite sua altura em metros!!"
+							keyboardType="numeric"
+							value={height}
+							style={styles.input}
+						></TextInput>
+						<Text
+							style={styles.formLabel}
+						>Peso</Text>
+						<Text
+							style={styles.errorMensage}
+						>
+							{errorMessage}
+						</Text>
+						<TextInput
+							onChangeText={setWeigth}
+							placeholder="Digite seu peso em kilos"
+							keyboardType="numeric"
+							value={weight}
+							style={styles.input}
+						></TextInput>
+					</View>
+				</Pressable>
+
+				:
+				<View style={styles.form}>
+					<ResultImc resultado={imc} mensagemResultImc={messageImc} />
+				</View>
+			}
+			<TouchableOpacity
+				style={styles.buttonCalculator}
+				onPress={() => { validateInput() }}
+			>
 				<Text
-					style={styles.formLabel}
-				>Altura</Text>
-				<Text
-					style={styles.errorMensage}
-				>
-					{errorMessage}
-				</Text>
-				<TextInput
-					onChangeText={setHeigth}
-					placeholder="Digite sua altura em metros!!"
-					keyboardType="numeric"
-					value={height}
-					style={styles.input}
-				></TextInput>
-				<Text
-					style={styles.formLabel}
-				>Peso</Text>
-				<Text
-					style={styles.errorMensage}
-				>
-					{errorMessage}
-				</Text>
-				<TextInput
-					onChangeText={setWeigth}
-					placeholder="Digite seu peso em kilos"
-					keyboardType="numeric"
-					value={weight}
-					style={styles.input}
-				></TextInput>
-				<TouchableOpacity
-					style={styles.buttonCalculator}
-					onPress={() => { validationImc() }}
-				>
-					<Text
-						style={styles.textButton}
-					>{textButton}</Text>
-				</TouchableOpacity>
-			</View>
-			<ResultImc resultado={imc} mensagemResultImc={messageImc} />
-		</Pressable>
+					style={styles.textButton}
+				>{textButton}</Text>
+			</TouchableOpacity>
+		</View>
 	);
 }

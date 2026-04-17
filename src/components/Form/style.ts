@@ -1,8 +1,9 @@
 import { StyleSheet } from "react-native"
 
 const styles = StyleSheet.create({
-	formContext:{
-		flex:1,
+	Container:{
+		width:'100%',
+		height:'100%',
 		bottom:0,
 		backgroundColor:'#f7f7f7',
 		alignItems:'center',
@@ -34,6 +35,7 @@ const styles = StyleSheet.create({
 		color:"#d9d9d9"
 	},
 	buttonCalculator:{
+		width:"80%",
 		marginTop:40,
 		backgroundColor:'#FF0043',
 		borderRadius:40,
