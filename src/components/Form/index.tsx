@@ -1,8 +1,13 @@
 import React from "react";
-import { Text, View, TextInput, Button, TouchableOpacity, Vibration, Pressable, Keyboard } from "react-native";
+import { Text, View, TextInput, Button, TouchableOpacity, Vibration, Pressable, Keyboard, FlatList } from "react-native";
 import ResultImc from "./ResultImc";
 import { useState } from "react";
 import styles from "./style";
+
+interface ImcItem {
+	id: number,
+	imc: string;
+}
 
 export default function Form() {
 	const [height, setHeigth] = useState<string>("");
@@ -11,9 +16,15 @@ export default function Form() {
 	const [imc, setImc] = useState<string>("");
 	const [textButton, setTextButton] = useState<string>("Calcular");
 	const [errorMessage, setErrorMessage] = useState<string>("");
+	const [imcList, setImcList] = useState<ImcItem[]>([]);
 
 	function calcularPeso(weigthValue: number, heigthValue: number): string {
-		return (weigthValue / (heigthValue * heigthValue)).toFixed(2);
+		let totalImc = (weigthValue / (heigthValue * heigthValue)).toFixed(2);
+		setImcList((arr) => [
+			...arr, 
+			{id: new Date().getTime(), imc: totalImc}
+		]);
+		return totalImc
 	}
 
 	function validateInput() {
@@ -100,6 +111,21 @@ export default function Form() {
 					style={styles.textButton}
 				>{textButton}</Text>
 			</TouchableOpacity>
+			<FlatList
+			style={styles.listImcs}
+			data={imcList.reverse()}
+			renderItem={({item}) => {
+				return (
+					<Text
+					style={styles.textListItemImcs}
+					
+					> Resultado IMC = {item.imc}</Text>
+				)
+			}}
+			keyExtractor={(item) => {
+				item.id
+			}}
+			/>
 		</View>
 	);
 }
