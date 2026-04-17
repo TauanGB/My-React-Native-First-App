@@ -48,14 +48,21 @@ const styles = StyleSheet.create({
 		fontWeight:'bold',
 		paddingLeft:20,
 	},
+	BoxListItemImcs:{
+		backgroundColor:'#00000023',
+		marginTop:10,
+		borderRadius:15,
+	},
 	listImcs:{
-		marginTop:20,
+		marginTop:15,
+		maxHeight:'45%',
 
 	},
 	textListItemImcs:{
 		fontSize:28,
 		color:'red',
-		
+		padding:10
+
 	}
 })
 

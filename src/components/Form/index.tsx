@@ -6,7 +6,7 @@ import styles from "./style";
 
 interface ImcItem {
 	id: number,
-	imc: string;
+	imc: null;
 }
 
 export default function Form() {
@@ -21,8 +21,8 @@ export default function Form() {
 	function calcularPeso(weigthValue: number, heigthValue: number): string {
 		let totalImc = (weigthValue / (heigthValue * heigthValue)).toFixed(2);
 		setImcList((arr) => [
-			...arr, 
-			{id: new Date().getTime(), imc: totalImc}
+			...arr,
+			{ id: new Date().getTime(), imc: totalImc }
 		]);
 		return totalImc
 	}
@@ -33,7 +33,7 @@ export default function Form() {
 			setErrorMessage("Este Campo e Obrigatorio*");
 			Vibration.vibrate();
 		}
-		else if(imc !== ''){ 
+		else if (imc !== '') {
 			setImc("");
 			setHeigth('')
 			setWeigth('')
@@ -46,7 +46,7 @@ export default function Form() {
 	function validationImc() {
 		const heightNumber = parseFloat(height.replace(',', '.'));
 		const weightNumber = parseFloat(weight.replace(',', '.'));
-		
+
 		if (!isNaN(heightNumber) && !isNaN(weightNumber) && heightNumber > 0) {
 			const result = calcularPeso(weightNumber, heightNumber);
 			setImc(result);
@@ -112,19 +112,23 @@ export default function Form() {
 				>{textButton}</Text>
 			</TouchableOpacity>
 			<FlatList
-			style={styles.listImcs}
-			data={imcList.reverse()}
-			renderItem={({item}) => {
-				return (
-					<Text
-					style={styles.textListItemImcs}
-					
-					> Resultado IMC = {item.imc}</Text>
-				)
-			}}
-			keyExtractor={(item) => {
-				item.id
-			}}
+				style={styles.listImcs}
+				data={imcList.reverse()}
+				renderItem={({ item }) => {
+					return (
+						<View
+						style={styles.BoxListItemImcs}
+						>
+							<Text
+								style={styles.textListItemImcs}
+
+							> Resultado IMC = {item.imc}</Text>
+						</View>
+					)
+				}}
+				keyExtractor={(item) => {
+					item.id
+				}}
 			/>
 		</View>
 	);
